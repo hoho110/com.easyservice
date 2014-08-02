@@ -1,6 +1,8 @@
 package com.easyservice.exception;
 
-public class PermissionException extends Exception{
+import com.easyservice.support.ServiceResponse.ExceptionType;
+
+public class PermissionException extends SuperException{
 	public PermissionException()
 	{
 		super();
@@ -8,5 +10,9 @@ public class PermissionException extends Exception{
 	public PermissionException(String message)
 	{
 		super(message);
+	}
+	public PermissionException(Throwable e,ExceptionType type)
+	{
+		super(e, type);
 	}
 }

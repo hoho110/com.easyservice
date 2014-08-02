@@ -41,7 +41,8 @@ public class HttpParse {
 			throws MalformedURLException {
 		this.request = request;
 		this.response = response;
-		String pathInfo = request.getPathInfo();
+		String pathInfo = request.getServletPath();
+		pathInfo=pathInfo.substring(ES_PATH_PATTERN.length());
 		int itfend = pathInfo.indexOf('/', 1);
 		if (itfend < 0) {
 			itfend = pathInfo.length();
@@ -99,15 +100,17 @@ public class HttpParse {
 				transportProtocol = PROTOCOL_TRANSPORT_HTTP;
 			}
 		}
-		StringBuffer transportUrl = new StringBuffer(transportProtocol)
-				.append("://")
-				// .append(request.get).append(":").append(request.getLocalPort())
-				.append(request.getHeader("Host")).append(ES_PATH_PATTERN)
-				.append("/").append(interfaceName);
+		StringBuilder transportUrl = new StringBuilder(transportProtocol).append("://").append(request.getHeader("Host")).append(request.getRequestURI().substring(0,request.getRequestURI().indexOf(interfaceName)+interfaceName.length()));
 		requestURL = new ServiceURL(serviceProtocol, bindingProtocol,
 				transportUrl.toString());
 	}
-
+	public <T> void setRequestAttribute(String key, T value) {
+		if (request != null){
+			request.setAttribute(key, value);
+		}else{
+			realConnection.setRequestProperty(key, value.toString());
+		}
+	}
 	public <T> T getRequestAttribute(String key) {
 		if (request != null) {
 			T rt = (T) request.getHeader(key);
@@ -123,4 +126,37 @@ public class HttpParse {
 	public boolean isFetchSdl() {
 		return isFetchSdl;
 	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public String getInterfaceName() {
+		return interfaceName;
+	}
+	public <T> T getAttribute(String key) {
+		return (T)attributeMap.get(key);
+	}
+
+	public <T> void setAttribute(String key, T value) {
+		attributeMap.put(key, value);
+	}
+
+	public String getServiceProtocol() {
+		return serviceProtocol;
+	}
+
+	public String getBindingProtocol() {
+		return bindingProtocol;
+	}
+
+	public String getTransportProtocol() {
+		return transportProtocol;
+	}
+	
+	
 }
