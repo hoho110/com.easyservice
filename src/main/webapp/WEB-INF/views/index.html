@@ -3,17 +3,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 <script type="text/javascript"
-	src="/easyservice/resources/EasyServiceClientFullZ.js"></script>
+	src="/resources/EasyServiceClientFullZ.js"></script>
 <script type="text/javascript"
-	src="/easyservice/resources/jquery-1.11.1.js"></script>
+	src="/resources/jquery-1.11.1.js"></script>
 <script type="text/javascript"
-	src="/easyservice/easyservice/com.easyservice.test.IUserService?json"></script>
+	src="/easyservice/com.easyservice.test.IUserService?json"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 				$("#btn").click(function() {
 			alert("click");
 			var service = EasyServiceClient
-					.getRemoteProxy("/easyservice/easyservice/com.easyservice.test.IUserService");
+					.getRemoteProxy("/easyservice/com.easyservice.test.IUserService");
 			var user = service.find("test");
 			var users = service.findAll();
 			var userForCreate={
