@@ -3,13 +3,13 @@ package com.easyservice.test;
 import com.easyservice.security.Permit;
 
 public class User implements Permit{
-	private int role;
+	private int privilege;
 	private String name;
 	public User(){}
-	public User(String name,int role)
+	public User(String name,int privilege)
 	{
 		this.name=name;
-		this.role=role;
+		this.privilege=privilege;
 	}
 	public String getName() {
 		return name;
@@ -20,12 +20,10 @@ public class User implements Permit{
 	}
 	@Override
 	public int getPrivilege() {
-		// TODO Auto-generated method stub
-		return 0;
+		return privilege;
 	}
 	@Override
 	public void setPrivilege(int privilege) {
-		// TODO Auto-generated method stub
-		
+		this.privilege=privilege;
 	}
 }
