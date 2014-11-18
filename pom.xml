@@ -6,6 +6,7 @@
 	<artifactId>easyservice</artifactId>
 	<name>com.easyservice</name>
 	<version>1.0.0</version>
+	<packaging>war</packaging>
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>

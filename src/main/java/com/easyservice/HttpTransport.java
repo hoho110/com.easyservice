@@ -1,18 +1,21 @@
 package com.easyservice;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.remoting.caucho.HessianServiceExporter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,8 +34,8 @@ import com.easyservice.support.ParamList;
 import com.easyservice.support.ServiceRequest;
 import com.easyservice.support.ServiceResponse;
 import com.easyservice.support.ServiceResponse.ExceptionType;
+import com.easyservice.test.IUserService;
 import com.easyservice.utils.ApplicationContextUtil;
-
 @Controller
 public class HttpTransport {
 	private static Logger logger = Logger.getLogger(HttpTransport.class);
@@ -48,7 +51,22 @@ public class HttpTransport {
 
 	@RequestMapping(value={"/easyservice/{interface}","/easyservice/{interface}/{method}"})
 	public void service(HttpServletRequest req, HttpServletResponse resp) {
-
+		Enumeration enumeration=req.getHeaderNames();
+		System.out.println("Headers:");
+		while(enumeration.hasMoreElements())
+		{
+			Object key=enumeration.nextElement();
+			Object value=req.getHeader(String.valueOf(key));
+			System.out.println(key+":"+value);
+		}
+		enumeration=req.getAttributeNames();
+		System.out.println("Params:");
+		while(enumeration.hasMoreElements())
+		{
+			Object key=enumeration.nextElement();
+			Object value=req.getAttribute(String.valueOf(key));
+			System.out.println(key+":"+value);
+		}
 		// 处理阶段
 		// 1.请求解析生成请求描述，根据requestURI以及参数（包括header）解析出->a.请求协议;b.请求服务/请求Sdl;c.请求服务接口
 

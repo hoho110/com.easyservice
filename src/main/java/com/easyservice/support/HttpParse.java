@@ -6,6 +6,7 @@ import static com.easyservice.support.EasyServiceConstant.PROTOCOL_BINGDING_JSON
 import static com.easyservice.support.EasyServiceConstant.PROTOCOL_BINGDING_REST;
 import static com.easyservice.support.EasyServiceConstant.PROTOCOL_ES_WS;
 import static com.easyservice.support.EasyServiceConstant.PROTOCOL_TRANSPORT_HTTP;
+import static com.easyservice.support.EasyServiceConstant.PROTOCOL_BINGDING_HESSIAN;
 
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -57,6 +58,14 @@ public class HttpParse {
 			transportProtocol = PROTOCOL_TRANSPORT_HTTP;
 		} else {
 			String ctxType = getRequestAttribute("Content-Type");
+			//添加Hessian支持
+			if(ctxType.equals("x-application/hessian"))
+			{
+				bindingProtocol = PROTOCOL_BINGDING_HESSIAN;
+				serviceProtocol = PROTOCOL_ES_WS;
+				transportProtocol = PROTOCOL_TRANSPORT_HTTP;
+				return;
+			}
 			String ptstr = null;
 			if (ctxType == null || !ctxType.startsWith("x-application/es:")) {
 				ptstr = request.getParameter(ES_PROTOCOL_FULLNAME);

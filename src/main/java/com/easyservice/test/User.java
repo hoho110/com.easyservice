@@ -2,7 +2,7 @@ package com.easyservice.test;
 
 import com.easyservice.security.Permit;
 
-public class User implements Permit{
+public class User implements Permit,java.io.Serializable{
 	private int privilege;
 	private String name;
 	public User(){}
